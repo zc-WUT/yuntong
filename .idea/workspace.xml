@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1393b559-fec4-413d-8f39-2c93671caea9" name="Default Changelist" comment="">
+    <list default="true" id="1393b559-fec4-413d-8f39-2c93671caea9" name="Default Changelist" comment="m2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,6 +98,9 @@
       <list>
         <item itemvalue="Spring Boot.SpringcloudProviderData8001Application" />
         <item itemvalue="Application.SpringcloudProviderData8001Application" />
+        <item itemvalue="Spring Boot.SpringcloudProviderData8001Application" />
+        <item itemvalue="Application.SpringcloudProviderData8001Application" />
+        <item itemvalue="Spring Boot.SpringcloudProviderData8001Application" />
       </list>
     </recent_temporary>
   </component>
@@ -152,7 +155,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="a" />
-    <option name="LAST_COMMIT_MESSAGE" value="a" />
+    <MESSAGE value="m1" />
+    <MESSAGE value="m2" />
+    <option name="LAST_COMMIT_MESSAGE" value="m2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="630" y="82" key="CommitChangelistDialog2" timestamp="1655546935361">
