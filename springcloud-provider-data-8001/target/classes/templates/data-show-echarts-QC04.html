@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>数据可视化</title>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <script th:inline="javascript">
+        var productNum =[[${productNum}]]
+    </script>
+    <style>
+        .app {
+            top: 0.4rem;
+            position: absolute;
+            left: 0.5rem;
+            height: 0.23rem;
+            width: 0.45rem;
+            background-color: white;
+        }
+
+        a {
+            color: black;
+            font-size: 0.18rem;
+            text-decoration: none;
+        }
+
+        .select {
+            top: 0.385rem;
+            position: absolute;
+            left: 1.1rem;
+            color: #fff;
+        }
+
+        select {
+            font-size: 0.18rem;
+        }
+    </style>
+</head>
+<body>
+<script src="/js/jquery.js"></script>
+<header>
+    <h1>岸桥[[${productNum}]]-钢丝绳检测数据可视化</h1>
+    <div class="app">
+        <a href="javascript:window.opener=null;window.open('','_self');window.close();">退 出</a>
+    </div>
+    <div class="select">
+        <select class="form-control" onchange="javascript:location.href=this.value;">
+            <option value="" selected="selected">选择岸桥</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC01">岸桥QC01</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC02">岸桥QC02</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC03">岸桥QC03</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC04">岸桥QC04</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC05">岸桥QC05</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC06">岸桥QC06</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC07">岸桥QC07</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC08">岸桥QC08</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC09">岸桥QC09</option>
+            <option value="/equipData/dataShowEcharts?productNum=QC10">岸桥QC10</option>
+        </select>
+    </div>
+    <div class="showTime"></div>
+    <!-- 时间显示 -->
+    <script>
+        var t = null;
+        t = setTimeout(time, 100); //開始运行
+        function time() {
+            clearTimeout(t); //清除定时器
+            dt = new Date();
+            var y = dt.getFullYear();
+            var mt = dt.getMonth() + 1;
+            var day = dt.getDate();
+            var h = dt.getHours(); //获取时
+            var m = dt.getMinutes(); //获取分
+            var s = dt.getSeconds(); //获取秒
+            document.querySelector(".showTime").innerHTML =
+                "当前时间：" + y + "年" + mt + "月" + day + "日" + "-" + h + "时" + m + "分" + s + "秒";
+            t = setTimeout(time, 100); //设定定时器，循环运行
+        }
+    </script>
+</header>
+<!-- 页面主体 -->
+<section class="mainbox">
+    <div class="map">
+        <div class="map1"></div>
+        <div class="map2"></div>
+        <div class="map3"></div>
+    </div>
+    <div class="column">
+        <div class="panel line1">
+            <h3>起升钢丝绳损伤%-随箱量变化曲线</h3>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+            <script>
+                $(function () {
+                    var myChart = echarts.init(document.querySelector(".line1 .chart"));
+                    var options = {
+                        roam: true,
+                        color: ['#1089E7', '#F57474', '#8B78F6', '#F8B448'],
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            left: '1%',
+                            top: '-1.0%',
+                            data: ['起升左前钢丝绳最大损伤量%', '起升左后钢丝绳最大损伤量%', '\n', '起升右前钢丝绳最大损伤量%', '起升右后钢丝绳最大损伤量%'],
+                            textStyle: {
+                                color: "#4c9bfd"
+                            },
+                            // selectedMode: 'single'
+
+                        },
+                        grid: {
+                            left: '1%',
+                            right: '3%',
+                            bottom: '3%',
+                            show: true,
+                            borderColor: '#012f4a',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            top: '-2%',
+                            left: '80%',
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            boundaryGap: true,
+                            data: [],
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'},
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                type: 'effectScatter ',
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'}
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "#012f4a"
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '起升左前钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: [],
+                            },
+
+                            {
+                                name: '起升左后钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+                            {
+                                name: '起升右前钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+
+                            {
+                                name: '起升右后钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+
+                        ]
+                    };
+                    // 给图标设置配置的参数
+
+                    myChart.showLoading(); // 显示加载动画
+                    var containerNums = [];
+                    var QC040101 = [];
+                    var QC040102 = [];
+                    var QC040103 = [];
+                    var QC040104 = [];
+// 异步请求加载数据
+                    $.ajax({
+                        url: "/equipData/containerDataShow?productNum="+productNum,
+                        type: 'post',
+                        async: true,
+                        dataType: 'json',
+                        success: function (result) {
+
+                            if (result != null && result.length > 0) {
+                                for (var i = 0; i < result.length; i++) {
+                                    containerNums.push(result[i].containerNum);
+                                    QC040101.push(result[i].QC040101);
+                                    QC040102.push(result[i].QC040102);
+                                    QC040103.push(result[i].QC040103);
+                                    QC040104.push(result[i].QC040104);
+                                }
+                            }
+
+                            myChart.hideLoading(); // 隐藏加载动画
+                            myChart.setOption({
+                                xAxis: {
+                                    data: containerNums
+                                },
+                                series: [
+                                    {
+                                        name: '起升左前钢丝绳最大损伤量%',
+                                        data: QC040101,
+
+                                    },
+                                    {
+                                        name: '起升左后钢丝绳最大损伤量%',
+                                        data: QC040102
+                                    },
+                                    {
+                                        name: '起升右前钢丝绳最大损伤量%',
+                                        data: QC040103
+                                    },
+
+                                    {
+                                        name: '起升右后钢丝绳最大损伤量%',
+                                        data: QC040104
+                                    }]
+                            });
+                        }
+                    });
+                    myChart.setOption(options);
+                });
+            </script>
+        </div>
+        <div class="panel line2">
+            <h3>起升钢丝绳损伤量%-随时间变化曲线</h3>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+            <script>
+                $(function () {
+                    var myChart = echarts.init(document.querySelector(".line2 .chart"));
+                    var options = {
+                        roam: true,
+                        color: ['#1089E7', '#F57474', '#8B78F6', '#F8B448'],
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            left: '1%',
+                            top: '-1.0%',
+                            data: ['起升左前钢丝绳最大损伤量%', '起升左后钢丝绳最大损伤量%', '\n', '起升右前钢丝绳最大损伤量%', '起升右后钢丝绳最大损伤量%'],
+                            textStyle: {
+                                color: "#4c9bfd"
+                            },
+                            // selectedMode: 'single'
+
+                        },
+                        grid: {
+                            left: '1%',
+                            right: '3%',
+                            bottom: '3%',
+                            show: true,
+                            borderColor: '#012f4a',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            top: '-2%',
+                            left: '80%',
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            boundaryGap: true,
+                            data: [],
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'},
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                type: 'effectScatter ',
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'}
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "#012f4a"
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '起升左前钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: [],
+                            },
+
+                            {
+                                name: '起升左后钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+                            {
+                                name: '起升右前钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+
+                            {
+                                name: '起升右后钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+
+                        ]
+                    };
+                    // 给图标设置配置的参数
+
+                    myChart.showLoading(); // 显示加载动画
+                    var workTimes = [];
+                    var QC040101 = [];
+                    var QC040102 = [];
+                    var QC040103 = [];
+                    var QC040104 = [];
+// 异步请求加载数据
+                    $.ajax({
+                        url: "/equipData/workTimeDataShow?productNum="+productNum,
+                        type: 'post',
+                        async: true,
+                        dataType: 'json',
+                        success: function (result) {
+
+                            if (result != null && result.length > 0) {
+                                for (var i = 0; i < result.length; i++) {
+                                    workTimes.push(result[i].workTime);
+                                    QC040101.push(result[i].QC040101);
+                                    QC040102.push(result[i].QC040102);
+                                    QC040103.push(result[i].QC040103);
+                                    QC040104.push(result[i].QC040104);
+                                }
+                            }
+
+                            myChart.hideLoading(); // 隐藏加载动画
+                            myChart.setOption({
+                                xAxis: {
+                                    data: workTimes
+                                },
+                                series: [
+                                    {
+                                        name: '起升左前钢丝绳最大损伤量%',
+                                        data: QC040101,
+
+                                    },
+                                    {
+                                        name: '起升左后钢丝绳最大损伤量%',
+                                        data: QC040102
+                                    },
+                                    {
+                                        name: '起升右前钢丝绳最大损伤量%',
+                                        data: QC040103
+                                    },
+
+                                    {
+                                        name: '起升右后钢丝绳最大损伤量%',
+                                        data: QC040104
+                                    }]
+                            });
+                        }
+                    });
+                    myChart.setOption(options);
+                });
+            </script>
+        </div>
+    </div>
+    <div class="column">
+        <div class="panel line3">
+            <h3>小车钢丝绳箱量与损伤%-曲线</h3>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+            <script>
+                $(function () {
+                    var myChart = echarts.init(document.querySelector(".line3 .chart"));
+                    var options = {
+                        roam: true,
+                        color: ['#1089E7', '#F57474', '#8B78F6', '#F8B448'],
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            left: '1%',
+                            top: '-1.0%',
+                            data: ['小车左前钢丝绳最大损伤量%', '小车左后钢丝绳最大损伤量%', '\n', '小车右前钢丝绳最大损伤量%', '小车右后钢丝绳最大损伤量%'],
+                            textStyle: {
+                                color: "#4c9bfd"
+                            },
+                            // selectedMode: 'single'
+
+                        },
+                        grid: {
+                            left: '1%',
+                            right: '3%',
+                            bottom: '3%',
+                            show: true,
+                            borderColor: '#012f4a',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            top: '-2%',
+                            left: '80%',
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            boundaryGap: true,
+                            data: [],
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'},
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                type: 'effectScatter ',
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'}
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "#012f4a"
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '小车左前钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: [],
+                            },
+
+                            {
+                                name: '小车左后钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+                            {
+                                name: '小车右前钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+
+                            {
+                                name: '小车右后钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+
+                        ]
+                    };
+                    // 给图标设置配置的参数
+
+                    myChart.showLoading(); // 显示加载动画
+                    var containerNums = [];
+                    var QC040201 = [];
+                    var QC040202 = [];
+                    var QC040203 = [];
+                    var QC040204 = [];
+// 异步请求加载数据
+                    $.ajax({
+                        url: "/equipData/containerDataShow?productNum="+productNum,
+                        type: 'post',
+                        async: true,
+                        dataType: 'json',
+                        success: function (result) {
+
+                            if (result != null && result.length > 0) {
+                                for (var i = 0; i < result.length; i++) {
+                                    containerNums.push(result[i].containerNum);
+                                    QC040201.push(result[i].QC040201);
+                                    QC040202.push(result[i].QC040202);
+                                    QC040203.push(result[i].QC040203);
+                                    QC040204.push(result[i].QC040204);
+                                }
+                            }
+
+                            myChart.hideLoading(); // 隐藏加载动画
+                            myChart.setOption({
+                                xAxis: {
+                                    data: containerNums
+                                },
+                                series: [
+                                    {
+                                        name: '小车左前钢丝绳最大损伤量%',
+                                        data: QC040201,
+
+                                    },
+                                    {
+                                        name: '小车左后钢丝绳最大损伤量%',
+                                        data: QC040202
+                                    },
+                                    {
+                                        name: '小车右前钢丝绳最大损伤量%',
+                                        data: QC040203
+                                    },
+
+                                    {
+                                        name: '小车右后钢丝绳最大损伤量%',
+                                        data: QC040204
+                                    }]
+                            });
+                        }
+                    });
+                    myChart.setOption(options);
+                });
+            </script>
+        </div>
+        <div class="panel line4">
+            <h3>小车钢丝绳损伤量%-随时间变化曲线</h3>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+            <script>
+                $(function () {
+                    var myChart = echarts.init(document.querySelector(".line4 .chart"));
+                    var options = {
+                        roam: true,
+                        color: ['#1089E7', '#F57474', '#8B78F6', '#F8B448'],
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            left: '1%',
+                            top: '-1.0%',
+                            data: ['小车左前钢丝绳最大损伤量%', '小车左后钢丝绳最大损伤量%', '\n', '小车右前钢丝绳最大损伤量%', '小车右后钢丝绳最大损伤量%'],
+                            textStyle: {
+                                color: "#4c9bfd"
+                            },
+                            // selectedMode: 'single'
+
+                        },
+                        grid: {
+                            left: '1%',
+                            right: '3%',
+                            bottom: '3%',
+                            show: true,
+                            borderColor: '#012f4a',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            top: '-2%',
+                            left: '80%',
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            boundaryGap: true,
+                            data: [],
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'},
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                type: 'effectScatter ',
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'}
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "#012f4a"
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '小车左前钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: [],
+                            },
+
+                            {
+                                name: '小车左后钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+                            {
+                                name: '小车右前钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+
+                            {
+                                name: '小车右后钢丝绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+
+                        ]
+                    };
+                    // 给图标设置配置的参数
+
+                    myChart.showLoading(); // 显示加载动画
+                    var workTimes = [];
+                    var QC040201 = [];
+                    var QC040202 = [];
+                    var QC040203 = [];
+                    var QC040204 = [];
+// 异步请求加载数据
+                    $.ajax({
+                        url: "/equipData/workTimeDataShow?productNum="+productNum,
+                        type: 'post',
+                        async: true,
+                        dataType: 'json',
+                        success: function (result) {
+
+                            if (result != null && result.length > 0) {
+                                for (var i = 0; i < result.length; i++) {
+                                    workTimes.push(result[i].workTime);
+                                    QC040201.push(result[i].QC040201);
+                                    QC040202.push(result[i].QC040202);
+                                    QC040203.push(result[i].QC040203);
+                                    QC040204.push(result[i].QC040204);
+                                }
+                            }
+
+                            myChart.hideLoading(); // 隐藏加载动画
+                            myChart.setOption({
+                                xAxis: {
+                                    data: workTimes
+                                },
+                                series: [
+                                    {
+                                        name: '小车左前钢丝绳最大损伤量%',
+                                        data: QC040201,
+                                    },
+                                    {
+                                        name: '小车左后钢丝绳最大损伤量%',
+                                        data: QC040202
+                                    },
+                                    {
+                                        name: '小车右前钢丝绳最大损伤量%',
+                                        data: QC040203
+                                    },
+
+                                    {
+                                        name: '小车右后钢丝绳最大损伤量%',
+                                        data: QC040204
+                                    }]
+                            });
+                        }
+                    });
+                    myChart.setOption(options);
+                });
+            </script>
+        </div>
+    </div>
+    <div class="column">
+        <div class="panel line5">
+            <h3>俯仰钢丝绳箱量与损伤%-曲线</h3>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+            <script>
+                $(function () {
+                    var myChart = echarts.init(document.querySelector(".line5 .chart"));
+                    var options = {
+                        roam: true,
+                        color: ['#1089E7', '#F57474', '#8B78F6', '#F8B448'],
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            left: '1%',
+                            top: '-1.0%',
+                            data: ['俯仰左绳最大损伤量%', '俯仰右绳最大损伤量%'],
+                            textStyle: {
+                                color: "#4c9bfd"
+                            },
+                            // selectedMode: 'single'
+
+                        },
+                        grid: {
+                            left: '1%',
+                            right: '3%',
+                            bottom: '3%',
+                            show: true,
+                            borderColor: '#012f4a',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            top: '-2%',
+                            left: '80%',
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            boundaryGap: true,
+                            data: [],
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'},
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                type: 'effectScatter ',
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'}
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "#012f4a"
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '俯仰左绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: [],
+                            },
+
+                            {
+                                name: '俯仰右绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+                            /*                            {
+                                                            name: '起升钢丝绳3最大损伤量%',
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            data: []
+                                                        },
+
+                                                        {
+                                                            name: '起升钢丝绳4最大损伤量%',
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            data: []
+                                                        },*/
+
+                        ]
+                    };
+                    // 给图标设置配置的参数
+
+                    myChart.showLoading(); // 显示加载动画
+                    var containerNums = [];
+                    var QC040301 = [];
+                    var QC040302 = [];
+                    /*                    var QC040103 = [];
+                                        var QC040104 = [];*/
+// 异步请求加载数据
+                    $.ajax({
+                        url: "/equipData/containerDataShow?productNum="+productNum,
+                        type: 'post',
+                        async: true,
+                        dataType: 'json',
+                        success: function (result) {
+
+                            if (result != null && result.length > 0) {
+                                for (var i = 0; i < result.length; i++) {
+                                    containerNums.push(result[i].containerNum);
+                                    QC040301.push(result[i].QC040301);
+                                    QC040302.push(result[i].QC040302);
+                                    /*                                    QC040103.push(result[i].QC040103);
+                                                                        QC040104.push(result[i].QC040104);*/
+                                }
+                            }
+
+                            myChart.hideLoading(); // 隐藏加载动画
+                            myChart.setOption({
+                                xAxis: {
+                                    data: containerNums
+                                },
+                                series: [
+                                    {
+                                        name: '俯仰左绳最大损伤量%',
+                                        data: QC040301,
+
+                                    },
+                                    {
+                                        name: '俯仰右绳最大损伤量%',
+                                        data: QC040302
+                                    },
+                                    /*                                    {
+                                                                            name: '起升钢丝绳3最大损伤量%',
+                                                                            data: QC040103
+                                                                        },
+
+                                                                        {
+                                                                            name: '起升钢丝绳4最大损伤量%',
+                                                                            data: QC040104
+                                                                        }*/]
+                            });
+                        }
+                    });
+                    myChart.setOption(options);
+                });
+            </script>
+        </div>
+        <div class="panel line6">
+            <h3>俯仰钢丝绳损伤量%-随时间变化曲线</h3>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+            <script>
+                $(function () {
+                    var myChart = echarts.init(document.querySelector(".line6 .chart"));
+                    var options = {
+                        roam: true,
+                        color: ['#1089E7', '#F57474', '#8B78F6', '#F8B448'],
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            left: '1%',
+                            top: '-1.0%',
+                            data: ['俯仰左绳最大损伤量%', '俯仰右绳最大损伤量%'],
+                            textStyle: {
+                                color: "#4c9bfd"
+                            },
+                            // selectedMode: 'single'
+
+                        },
+                        grid: {
+                            left: '1%',
+                            right: '3%',
+                            bottom: '3%',
+                            show: true,
+                            borderColor: '#012f4a',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            top: '-2%',
+                            left: '80%',
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            boundaryGap: true,
+                            data: [],
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'},
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                type: 'effectScatter ',
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            axisTick: {
+                                lineStyle: {color: '#4c9bfd'}
+                            },
+                            axisLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                color: "#4c9bfd"
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: "#012f4a"
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: '俯仰左绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: [],
+                            },
+
+                            {
+                                name: '俯仰右绳最大损伤量%',
+                                type: 'line',
+                                smooth: true,
+                                data: []
+                            },
+                            /*                            {
+                                                            name: '起升钢丝绳3最大损伤量%',
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            data: []
+                                                        },
+
+                                                        {
+                                                            name: '起升钢丝绳4最大损伤量%',
+                                                            type: 'line',
+                                                            smooth: true,
+                                                            data: []
+                                                        },*/
+
+                        ]
+                    };
+                    // 给图标设置配置的参数
+
+                    myChart.showLoading(); // 显示加载动画
+                    var workTimes = [];
+                    var QC040301 = [];
+                    var QC040302 = [];
+                    /*                    var QC040103 = [];
+                                        var QC040104 = [];*/
+// 异步请求加载数据
+                    $.ajax({
+                        url: "/equipData/workTimeDataShow?productNum="+productNum,
+                        type: 'post',
+                        async: true,
+                        dataType: 'json',
+                        success: function (result) {
+
+                            if (result != null && result.length > 0) {
+                                for (var i = 0; i < result.length; i++) {
+                                    workTimes.push(result[i].workTime);
+                                    QC040301.push(result[i].QC040301);
+                                    QC040302.push(result[i].QC040302);
+                                    /*                                    QC040103.push(result[i].QC040103);
+                                                                        QC040104.push(result[i].QC040104);*/
+                                }
+                            }
+
+                            myChart.hideLoading(); // 隐藏加载动画
+                            myChart.setOption({
+                                xAxis: {
+                                    data: workTimes
+                                },
+                                series: [
+                                    {
+                                        name: '俯仰左绳最大损伤量%',
+                                        data: QC040301,
+
+                                    },
+                                    {
+                                        name: '俯仰右绳最大损伤量%',
+                                        data: QC040302
+                                    },
+                                    /*                                    {
+                                                                            name: '起升钢丝绳3最大损伤量%',
+                                                                            data: QC040103
+                                                                        },
+
+                                                                        {
+                                                                            name: '起升钢丝绳4最大损伤量%',
+                                                                            data: QC040104
+                                                                        }*/]
+                            });
+                        }
+                    });
+                    myChart.setOption(options);
+                });
+            </script>
+        </div>
+    </div>
+
+</section>
+<script src="/js/flexible.js"></script>
+<script src="/js/echarts.min.js"></script>
+<script src="/js/index.js"></script>
+<%--		<script src="./data/data.json"></script>--%>
+
+</body>
+</html>

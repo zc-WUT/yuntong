@@ -1,0 +1,177 @@
+
+<aside class="main-sidebar"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="/img/biaozhi.png" class="img-circle">
+            </div>
+            <div class="pull-left info">
+                <p sec:authentication="name"></p>
+                <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+
+            <li id="admin-index"><a href="/main.html"><i
+                    class="fa fa-dashboard"></i> <span>首页</span></a></li>
+
+            <!-- 菜单 -->
+
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-bell"></i> <span>设备预警</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    <li id="elements-general">
+                        <a href="/testData/findMaxOfPro">
+                            <i class="fa fa-circle-o"></i> 检测结果
+                        </a>
+                    </li>
+
+                    <li id="elements-modals">
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> 损伤变化
+                        </a>
+                    </li>
+
+                    <li id="elements-widgets">
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> 断丝变化
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-search"></i> <span>数据查询</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    <li id="history-data">
+                        <a href="/historyData/findAll?page=1&size=10">
+                            <i class="fa fa-circle-o"></i> 历史数据
+                        </a>
+                    </li>
+
+                    <li id="history-curve">
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> 历史曲线
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-area-chart"></i> <span>数据统计</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="real-time-data">
+                        <a href="/real-time-data.html">
+                            <i class="fa fa-circle-o"></i> 实时曲线
+                        </a>
+                    </li>
+
+                    <li id="charts-chartjs">
+                        <a target="_blank" href="/equipData/dataShowEcharts">
+                            <i class="fa fa-circle-o"></i> 数据可视化
+                        </a>
+                    </li>
+
+                    <li id="charts-inline">
+                        <a href="/equipData/ReportOfData">
+                            <i class="fa fa-circle-o"></i> 数据汇总报表
+                        </a>
+                    </li>
+
+                    <li id="charts-flot">
+                        <a href="">
+                            <i class="fa fa-circle-o"></i> 断丝趋势
+                        </a>
+                    </li>
+
+
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-tv "></i> <span>设备管理面板</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    <li id="group-manage">
+                        <a href="/product/findAll?page=1&size=10">
+                            <i class="fa fa-circle-o"></i> 机组管理
+                        </a>
+                    </li>
+
+                    <li id="equip-manage">
+                        <a href="/equipment/findAll?page=1&size=10">
+                            <i class="fa fa-circle-o"></i> 设备管理
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="treeview" sec:authorize="hasRole('ADMIN')">
+<!--                <sec:authorize access="hasRole('ROLE_ADMIN')">-->
+                    <a href="#">
+                        <i class="fa fa-cogs"></i>
+                        <span>系统管理</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li id="users-setting"><a
+                                href="/user/findAll"> <i
+                                class="fa fa-circle-o"></i> 用户管理
+                        </a></li>
+                        <li id="role-setting"><a
+                                href="/role/findAll"> <i
+                                class="fa fa-circle-o"></i> 角色管理
+                        </a></li>
+                        <li id="permission-setting"><a
+                                href="/permission/findAll">
+                            <i class="fa fa-circle-o"></i> 资源权限管理
+                        </a></li>
+                        <li id="system-test"><a target="_blank"
+                                                   href="/swagger-ui.html?urls.primaryName=张弛#/"> <i
+                                class="fa fa-circle-o"></i> 功能测试
+                        </a></li>
+                        <li id="system-setting"><a target="_blank"
+                                href="/druid/login.html"> <i
+                                class="fa fa-circle-o"></i> 系统日志
+                        </a></li>
+
+                    </ul>
+<!--                </security:authorize>-->
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

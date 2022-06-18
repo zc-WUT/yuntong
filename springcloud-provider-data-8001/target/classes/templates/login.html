@@ -1,0 +1,88 @@
+
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>YUNTONG | 登录系统</title>
+    <meta
+            content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+            name="viewport">
+    <link rel="stylesheet"
+          href="/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet"
+          href="/plugins/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet"
+          href="/plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet"
+          href="/plugins/iCheck/square/blue.css">
+
+    <style type="text/css">
+        html {
+            height: 100%;
+        }
+
+        #login_background {
+            background-image: url("/img/backphoto.jpg");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            border-style: solid;
+            border-color: #6897F3;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page" id="login_background">
+<div class="login-box">
+    <div class="login-logo">
+        <b>上海云童</b><br/>智慧探伤安全预警系统
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <h4><p class="login-box-msg">登录系统</p></h4>
+        <form th:action="@{/login}"
+              method="post">
+            <div class="form-group has-feedback">
+                <input type="text" name="username" class="form-control"
+                       placeholder="请输入用户名" value="">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" name="password" class="form-control"
+                       placeholder="请输入密码" value=""> <span
+                    class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox ">
+                        <label><input  type="checkbox" name="rememberMe"> 记住 下次自动登录</label>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <button th:type="submit" class="btn btn-primary btn-block btn-flat">登</button>
+                </div>
+            </div>
+        </form>
+        <a th:href="@{/logout}">忘记密码</a><br>
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<script
+        src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script
+        src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script
+        src="/plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' / optional
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/lib/bcprov-jdk16-1.46.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/j-interop-2.0.4-sources.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/j-interop-2.0.4.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/j-interop.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/j-interopdeps-2.0.4-sources.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/j-interopdeps-2.0.4.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/j-interopdeps.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/logback-classic-1.2.3.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/logback-core-1.2.3.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/org.openscada.external.jcifs-1.2.25-20150512.072447-33-sources.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/org.openscada.external.jcifs-1.2.25-20150512.072447-33.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/org.openscada.opc.dcom-1.5.0.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/org.openscada.opc.lib-1.5.0.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lib/slf4j-api-1.7.25.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloud-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloud-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloud-provider-data-8001/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloud-provider-data-8001/src/main/java/com/yuntong/springcloud/utils/UtgardTutorial2.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/springcloud-provider-data-8001/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="GBK" />
+  </component>
+</project>
