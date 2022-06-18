@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/permission")
-@Api(tags = "权限管理")
+@Api(tags = "权限管理1")
 public class PermissionController {
     @Autowired
     private PermissionService permissionService;
