@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1393b559-fec4-413d-8f39-2c93671caea9" name="Default Changelist" comment="m2">
+    <list default="true" id="1393b559-fec4-413d-8f39-2c93671caea9" name="Default Changelist" comment="a">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -12,10 +12,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="m1" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -153,6 +154,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="a" />
     <MESSAGE value="m1" />
@@ -160,10 +172,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="m2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="630" y="82" key="CommitChangelistDialog2" timestamp="1655546935361">
+    <state x="630" y="82" key="CommitChangelistDialog2" timestamp="1655548375251">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="630" y="82" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1655546935361" />
+    <state x="630" y="82" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1655548375251" />
     <state x="1220" y="264" key="FileChooserDialogImpl" timestamp="1655545497569">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -216,6 +228,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1053" y="100" width="774" height="847" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1655545578379" />
+    <state x="742" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1655548345169">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="742" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1655548345169" />
     <state x="1305" y="322" width="1062" height="647" key="new project wizard" timestamp="1649312247351">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
